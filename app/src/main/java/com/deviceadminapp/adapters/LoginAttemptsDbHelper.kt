@@ -1,8 +1,10 @@
 package com.deviceadminapp.adapters
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.deviceadminapp.models.LoginAttemptModel
 
 class LoginAttemptsDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -31,4 +33,20 @@ class LoginAttemptsDbHelper(context: Context) : SQLiteOpenHelper(context, DATABA
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_ATTEMPTS")
         onCreate(db)
     }
+
+    fun insertAttempt(loginAttempt: LoginAttemptModel): Long {
+
+        val db = this.writableDatabase
+
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ID, loginAttempt.id)
+        contentValues.put(KEY_ATTEMPT_SUCCESS, loginAttempt.success)
+        contentValues.put(KEY_ATTEMPT_TIME, loginAttempt.attemptTime)
+
+        val success = db.insert(TABLE_ATTEMPTS, null, contentValues)
+        db.close()
+
+        return success
+    }
+
 }
