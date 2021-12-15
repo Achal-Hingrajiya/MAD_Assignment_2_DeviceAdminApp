@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/black"
+    android:backgroundTint="@color/cardview_light_background"
     app:cardCornerRadius="5dp">
 
     <RelativeLayout
@@ -24,7 +24,7 @@
                 android:textSize="20sp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textColor="@color/white"/>
+                android:textColor="@color/black"/>
 
             <View
                 android:id="@+id/v_success"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Attempt Time :"
             android:layout_below="@id/row1"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -51,7 +51,7 @@
             android:id="@+id/tv_attempt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:layout_alignBaseline="@id/lbl_attempt_time"
             android:layout_toRightOf="@id/lbl_attempt_time"
             android:layout_toEndOf="@id/lbl_attempt_time"

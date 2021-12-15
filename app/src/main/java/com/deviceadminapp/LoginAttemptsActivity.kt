@@ -1,5 +1,6 @@
 package com.deviceadminapp
 
+import android.annotation.SuppressLint
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Intent
@@ -12,6 +13,10 @@ import com.deviceadminapp.models.LoginAttemptModel
 import com.deviceadminapp.receivers.DevAdminReceiver
 
 class LoginAttemptsActivity : AppCompatActivity() {
+    companion object{
+        @SuppressLint("StaticFieldLeak")
+        lateinit var loginAttemptsAdapter : LoginAtteptAdapter
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_attempts)
@@ -24,21 +29,21 @@ class LoginAttemptsActivity : AppCompatActivity() {
         if (policyManager.isAdminActive(componentName)) {
             Log.v("$$$$$$", "Admin is already activated")
 
-
-            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
+//
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
+//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
 
 
 
             val lvLoginAttempts = findViewById<ListView>(R.id.lv_login_attempts)
-            val loginAttemptsAdapter = LoginAtteptAdapter(this, LoginAttemptModel.listOfAttempts)
+            loginAttemptsAdapter = LoginAtteptAdapter(this, LoginAttemptModel.listOfAttempts)
             lvLoginAttempts.adapter = loginAttemptsAdapter
 
         } else {
