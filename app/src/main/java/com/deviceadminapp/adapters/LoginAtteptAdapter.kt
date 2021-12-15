@@ -47,7 +47,10 @@ class LoginAtteptAdapter(private val context : Context) : BaseAdapter() {
         val attempt = getItem(p0)
 
         attemptTime.text = attempt.attemptTime
-        if (attempt.success != LoginAttemptModel.SUCCESS) attemptStatus.backgroundTintList = context.resources.getColorStateList(R.color.red)
+        if (attempt.success != LoginAttemptModel.SUCCESS){
+            attemptStatus.setBackgroundResource(R.drawable.ic_baseline_cancel_24)
+            attemptStatus.backgroundTintList = context.resources.getColorStateList(R.color.red)
+        }
 
         return attemptCard
     }
