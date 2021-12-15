@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Device Admin App</string>
+    <string name="device_admin_explanation">For experimentation purposes only</string>
 </resources>
