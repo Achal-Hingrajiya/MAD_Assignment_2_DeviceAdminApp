@@ -13,9 +13,15 @@ import com.deviceadminapp.R
 import com.deviceadminapp.models.LoginAttemptModel
 
 
-class LoginAtteptAdapter(private val context : Context, private val dataSource : ArrayList<LoginAttemptModel>) : BaseAdapter() {
+class LoginAtteptAdapter(private val context : Context) : BaseAdapter() {
 
+    private val dbHelper = LoginAttemptsDbHelper(context)
+    private var dataSource = dbHelper.getAllAttempts()
 
+    override fun notifyDataSetChanged() {
+        super.notifyDataSetChanged()
+        dataSource = dbHelper.getAllAttempts()
+    }
     override fun getCount(): Int {
         return dataSource.size
     }
@@ -41,9 +47,8 @@ class LoginAtteptAdapter(private val context : Context, private val dataSource :
         val attempt = getItem(p0)
 
         attemptTime.text = attempt.attemptTime
-        if (!attempt.success) attemptStatus.backgroundTintList = context.resources.getColorStateList(R.color.red)
+        if (attempt.success != LoginAttemptModel.SUCCESS) attemptStatus.backgroundTintList = context.resources.getColorStateList(R.color.red)
 
         return attemptCard
-
     }
 }

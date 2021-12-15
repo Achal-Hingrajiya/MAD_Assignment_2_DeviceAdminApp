@@ -29,21 +29,8 @@ class LoginAttemptsActivity : AppCompatActivity() {
         if (policyManager.isAdminActive(componentName)) {
             Log.v("$$$$$$", "Admin is already activated")
 
-//
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(true))
-//            LoginAttemptModel.addAttempt(LoginAttemptModel(false))
-
-
-
             val lvLoginAttempts = findViewById<ListView>(R.id.lv_login_attempts)
-            loginAttemptsAdapter = LoginAtteptAdapter(this, LoginAttemptModel.listOfAttempts)
+            loginAttemptsAdapter = LoginAtteptAdapter(this)
             lvLoginAttempts.adapter = loginAttemptsAdapter
 
         } else {
@@ -55,4 +42,6 @@ class LoginAttemptsActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 }
