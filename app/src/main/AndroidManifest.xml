@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeviceAdminApp">
+        <service
+            android:name=".services.MediaService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".services.MyIntentService"
+            android:exported="false" />
+
         <activity
             android:name=".DashboardActivity"
             android:noHistory="true">
@@ -20,9 +28,7 @@
         </activity>
         <activity
             android:name=".LoginAttemptsActivity"
-            android:noHistory="true">
-
-        </activity>
+            android:noHistory="true" />
 
         <receiver
             android:name=".receivers.DevAdminReceiver"

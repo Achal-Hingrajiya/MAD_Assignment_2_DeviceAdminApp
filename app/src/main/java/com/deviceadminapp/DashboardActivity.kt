@@ -1,16 +1,32 @@
 package com.deviceadminapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.deviceadminapp.receivers.PowerConnectionReceiver
+import com.deviceadminapp.services.MediaService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashboardActivity : AppCompatActivity() {
+    companion object{
+        lateinit var mediaServiceIntent : Intent
+
+    }
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
         supportActionBar?.hide()
+
+        mediaServiceIntent = Intent(this, MediaService::class.java)
 
         val bNav = findViewById<BottomNavigationView>(R.id.bottom_nav_dashboard)
         bNav.setOnItemSelectedListener {
@@ -26,7 +42,48 @@ class DashboardActivity : AppCompatActivity() {
                 }
             }
         }
+
         bNav.selectedItemId = R.id.menu_dashboard
 
+        val btnPowerConnection = findViewById<Button>(R.id.btn_activate_power_connection)
+        btnPowerConnection.setOnClickListener{
+            lateinit var receiver : PowerConnectionReceiver
+
+            var isActive = false
+
+            if (isActive){
+                btnPowerConnection.backgroundTintList = this.resources.getColorStateList(R.color.green)
+                btnPowerConnection.text = getString(R.string.activate_power_connection_alarm)
+                stopService(mediaServiceIntent)
+            }
+            else{
+                if(isConnected(this)){
+
+                    receiver  = PowerConnectionReceiver()
+
+                    val filter = IntentFilter()
+                    filter.addAction(Intent.ACTION_POWER_CONNECTED)
+                    filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+                    registerReceiver(receiver, filter)
+
+                    btnPowerConnection.backgroundTintList = this.resources.getColorStateList(R.color.red)
+                    btnPowerConnection.text = getString(R.string.deactivate_power_connection_alarm)
+
+                    Toast.makeText(this, "Alarm Activated", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(this, "Please Connect Your Charger First", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }
+    }
+
+    private fun isConnected(context: Context): Boolean {
+        val intent: Intent =
+            context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))!!
+        val plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
+        return plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB
     }
 }
