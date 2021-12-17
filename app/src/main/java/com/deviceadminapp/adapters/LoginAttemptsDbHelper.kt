@@ -88,5 +88,19 @@ class LoginAttemptsDbHelper(context: Context) : SQLiteOpenHelper(context, DATABA
         return attemptList
     }
 
+    fun deleteAllAttempts(){
+        val deleteQuery = "DELETE FROM $TABLE_ATTEMPTS"
+        val db = this.writableDatabase
+
+        try {
+            db.execSQL(deleteQuery)
+
+        } catch (e: SQLiteException) {
+            db.execSQL(deleteQuery)
+
+        }
+
+    }
+
 
 }

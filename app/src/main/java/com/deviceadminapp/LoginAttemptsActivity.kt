@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
+import com.deviceadminapp.adapters.LoginAttemptsDbHelper
 import com.deviceadminapp.adapters.LoginAtteptAdapter
 import com.deviceadminapp.models.LoginAttemptModel
 import com.deviceadminapp.receivers.DevAdminReceiver
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LoginAttemptsActivity : AppCompatActivity() {
     companion object{
@@ -40,6 +42,15 @@ class LoginAttemptsActivity : AppCompatActivity() {
             intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                 getString(R.string.device_admin_explanation))
             startActivity(intent)
+        }
+
+        val fabClearAll = findViewById<FloatingActionButton>(R.id.fab_clear_all)
+        fabClearAll.setOnClickListener {
+            val dbHelper = LoginAttemptsDbHelper(this)
+            dbHelper.deleteAllAttempts()
+            dbHelper.close()
+            loginAttemptsAdapter.notifyDataSetChanged()
+
         }
     }
 
