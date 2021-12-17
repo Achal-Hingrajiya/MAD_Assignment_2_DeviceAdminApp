@@ -28,4 +28,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_login_attempt"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/clear_all"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:backgroundTint="@color/purple_500"
+        android:tooltipText="@string/clear_all"
+        app:tint="@color/white"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
