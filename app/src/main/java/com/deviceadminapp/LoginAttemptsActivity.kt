@@ -12,6 +12,7 @@ import com.deviceadminapp.adapters.LoginAttemptsDbHelper
 import com.deviceadminapp.adapters.LoginAtteptAdapter
 import com.deviceadminapp.models.LoginAttemptModel
 import com.deviceadminapp.receivers.DevAdminReceiver
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LoginAttemptsActivity : AppCompatActivity() {
@@ -24,6 +25,23 @@ class LoginAttemptsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login_attempts)
 
         supportActionBar?.hide()
+
+        val bNav = findViewById<BottomNavigationView>(R.id.bottom_nav_login_attempt)
+        bNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.menu_dashboard ->{
+                    Intent(this, DashboardActivity :: class.java).apply {
+                        startActivity(this)
+                    }
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+                    return@setOnItemSelectedListener true
+                }
+            }
+        }
+        
+        bNav.selectedItemId = R.id.menu_login_attempt
 
         val componentName = ComponentName(this, DevAdminReceiver::class.java)
         val policyManager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager

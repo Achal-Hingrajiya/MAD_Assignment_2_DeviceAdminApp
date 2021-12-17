@@ -2,4 +2,16 @@
     <string name="app_name">Device Admin App</string>
     <string name="device_admin_explanation">For experimentation purposes only</string>
     <string name="clear_all">Clear All</string>
+    <string name="activate_power_connection_alarm">Activate Power Connection Alarm</string>
+    <string name="deactivate_power_connection_alarm">Deactivate Power Connection Alarm</string>
+    <string name="activate_motion_alarm">Activate Motion Alarm</string>
+    <string name="deactivate_motion_alarm">Deactivate Motion Alarm</string>
+    <string name="activate_full_charge_alarm">Activate Full Charge Alarm</string>
+    <string name="deactivate_full_charge_alarm">Deactivate Full Charge Alarm</string>
+    <string name="activate_proximity_alarm">Activate Proximity Alarm</string>
+    <string name="deactivate_proximity_alarm">Deactivate Proximity Alarm</string>
+    <string name="login_attempt">Login Attempt</string>
+    <string name="attempt_time">Attempt Time :</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="login_attempts">Login Attempts</string>
 </resources>
