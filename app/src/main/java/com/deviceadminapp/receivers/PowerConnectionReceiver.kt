@@ -20,6 +20,7 @@ class PowerConnectionReceiver : BroadcastReceiver() {
 
                 Log.v("$$$$$$", "Power Disconnected")
                 Toast.makeText(context, "Disconnected", Toast.LENGTH_SHORT).show();
+                context?.unregisterReceiver(this)
             }
         }
     }

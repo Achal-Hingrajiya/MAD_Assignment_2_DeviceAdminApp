@@ -20,12 +20,14 @@ class MediaService : Service() {
         media = MediaPlayer.create(this, R.raw.alert)
         try {
             media.prepare()
+
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
         }
         media.start()
+        media.isLooping = true
 
         return super.onStartCommand(intent, flags, startId)
     }
