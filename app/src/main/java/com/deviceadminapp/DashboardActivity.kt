@@ -19,6 +19,7 @@ class DashboardActivity : AppCompatActivity() {
         lateinit var mediaServiceIntent: Intent
         lateinit var sharedPreferences: SharedPreferences
         const val IS_POWER_CONN_ALARM_ACTIVE = "isPowerConnectionAlarmActive"
+        const val IS_FULL_CHARGE_ALARM_ACTIVE = "isFullChargeAlarmActive"
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -94,13 +95,30 @@ class DashboardActivity : AppCompatActivity() {
 
         val btnFullCharge = findViewById<Button>(R.id.btn_activate_full_charge)
         btnFullCharge.setOnClickListener {
-
-            btnFullCharge.backgroundTintList =
-                
-                this.resources.getColorStateList(R.color.red)
-            btnFullCharge.text = getString(R.string.deactivate_full_charge_alarm)
             val fullChargeBR = BatteryFullyChargedReceiver()
-            registerReceiver(fullChargeBR, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
+            val isFullChargeActive = sharedPreferences.getBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, false)
+            if(!isFullChargeActive){
+                btnFullCharge.backgroundTintList =
+                    this.resources.getColorStateList(R.color.red)
+                btnFullCharge.text = getString(R.string.deactivate_full_charge_alarm)
+
+                registerReceiver(fullChargeBR, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
+                val editor = sharedPreferences.edit()
+                editor.putBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, true)
+                editor.apply()
+            }
+            else{
+                stopService(mediaServiceIntent)
+                btnFullCharge.backgroundTintList =
+                    this.resources.getColorStateList(R.color.green)
+                btnFullCharge.text = getString(R.string.activate_full_charge_alarm)
+
+                val editor = sharedPreferences.edit()
+                editor.putBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, false)
+                editor.apply()
+            }
         }
     }
 
