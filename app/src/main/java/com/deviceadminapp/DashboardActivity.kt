@@ -4,7 +4,6 @@ import android.content.*
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -97,19 +96,24 @@ class DashboardActivity : AppCompatActivity() {
         btnFullCharge.setOnClickListener {
             val fullChargeBR = BatteryFullyChargedReceiver()
 
-            val isFullChargeActive = sharedPreferences.getBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, false)
-            if(!isFullChargeActive){
-                btnFullCharge.backgroundTintList =
-                    this.resources.getColorStateList(R.color.red)
-                btnFullCharge.text = getString(R.string.deactivate_full_charge_alarm)
+            val isFullChargeActive =
+                sharedPreferences.getBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, false)
+            if (!isFullChargeActive) {
+                if (isConnected(this)) {
+                    btnFullCharge.backgroundTintList =
+                        this.resources.getColorStateList(R.color.red)
+                    btnFullCharge.text = getString(R.string.deactivate_full_charge_alarm)
 
-                registerReceiver(fullChargeBR, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+                    registerReceiver(fullChargeBR, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
-                val editor = sharedPreferences.edit()
-                editor.putBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, true)
-                editor.apply()
-            }
-            else{
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean(IS_FULL_CHARGE_ALARM_ACTIVE, true)
+                    editor.apply()
+                } else {
+                    Toast.makeText(this, "Please Connect Your Charger First", Toast.LENGTH_LONG)
+                        .show()
+                }
+            } else {
                 stopService(mediaServiceIntent)
                 btnFullCharge.backgroundTintList =
                     this.resources.getColorStateList(R.color.green)
